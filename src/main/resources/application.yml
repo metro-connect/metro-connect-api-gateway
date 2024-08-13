@@ -1,0 +1,43 @@
+server:
+  port: 9000
+  
+#datasource configuration  
+spring: 
+  application:
+    name: metro-connect-api-gateway
+    
+  cloud:
+    gateway:
+      routes:
+      - id: metro-connect-user-service
+        uri: lb://metro-connect-user-service
+        predicates:
+        - Path=/api/user/**
+        
+      - id: metro-connect-metro-service
+        uri: lb://metro-connect-metro-service
+        predicates:
+        - Path=/api/metro/**
+        
+      - id: metro-connect-location-service
+        uri: lb://metro-connect-location-service
+        predicates:
+        - Path=/api/location/**
+        
+      - id: metro-connect-book-service
+        uri: lb://metro-connect-book-service
+        predicates:
+        - Path=/api/metro/book/** 
+   
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+      
+
+    
